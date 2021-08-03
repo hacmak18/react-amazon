@@ -12,6 +12,8 @@ export const Product = ({ id, title, price, description, category, image }) => {
     );
 
     const [hasPrime] = useState(Math.random() < 0.5)
+    
+const addItemToBasket=()=>{}
 
     return (
         <div className="relative flex flex-col m-5 bg-white z-30 p-10">
@@ -41,7 +43,7 @@ export const Product = ({ id, title, price, description, category, image }) => {
                 </div>
             )}
             
-            <button className="mt-auto button" >Add to Basket</button>
+            <button onClick={addItemToBasket} className="mt-auto button" >Add to Basket</button>
         </div>
     );
 }

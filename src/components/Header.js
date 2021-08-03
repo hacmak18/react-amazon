@@ -5,14 +5,19 @@ import {
     SearchIcon,
     ShoppingCartIcon
 } from '@heroicons/react/outline'
+import { signIn, signOut, useSession } from "next-auth/client";
+import { useRouter } from 'next/router'
 
 function Header() {
+    const [session] = useSession();
+    const router = useRouter()
+
     return (
-        <header>
-            {/* Top nav */}
+        <header className="sticky top-0 z-50">
             <div className="flex items-center bg-amazon_blue p-1 flex-grow py-2">
                 <div className="mt-2 flex items-center flex-grow sm:flex-grow-0">
                     <Image
+                        onClick={() => router.push('/')}
                         src="https://links.papareact.com/f90"
                         width={150}
                         height={40}
@@ -20,24 +25,25 @@ function Header() {
                         className="cursor-pointer"
                     />
                 </div>
-                {/* search bar */}
                 <div className="hidden sm:flex items-center h-10 rounded-md cursor-pointer flex-grow bg-yellow-400 hover:bg-yellow-500 ">
                     <input type="text" className="p-2 h-full w-6 flex-grow flex-shrink rounded-l-md focus:outline-none px-4" />
                     <SearchIcon className="h-12 p-4" />
                 </div>
-                {/* Right bar */}
+
                 <div className="text-white text-xs flex items-center space-x-6 mx-6 whitespace-nowrap">
-                    <div className="link">
-                        <p>Hello</p>
+                    <div onClick={!session ? signIn : signOut} className="cursor-pointer link">
+                        <p className="hover:underline">
+                            {session ? `Hello, ${session.user.name}` : 'Signin'}
+                        </p>
                         <p className="font-extrabold md:text-sm">Account & List</p>
                     </div>
                     <div className="link">
                         <p>Returns</p>
                         <p className="font-extrabold md:text-sm">& Orders</p>
                     </div>
-                    <div className="relative link flex items-center">
+                    <div onClick={()=>router.push('/Checkout')} className="relative link flex items-center">
                         <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center text-black font-bold rounded-full">4</span>
-                        <ShoppingCartIcon className="h-10"/>
+                        <ShoppingCartIcon className="h-10" />
                         <p className="hidden md:inline font-extrabold md:text-sm mt-2">Basket</p>
                     </div>
                 </div>
@@ -45,7 +51,7 @@ function Header() {
             {/* nav bottom */}
             <div className="flex items-center space-x-3 p-2 pl-6 bg-amazon_blue-light text-white text-sm">
                 <p className="link flex items-center">
-                    <MenuIcon className="h-6 mr-1"/>
+                    <MenuIcon className="h-6 mr-1" />
                     All
                 </p>
                 <p className="link">Prime Video</p>
