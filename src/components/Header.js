@@ -7,11 +7,13 @@ import {
 } from '@heroicons/react/outline'
 import { signIn, signOut, useSession } from "next-auth/client";
 import { useRouter } from 'next/router'
+import {selectItems} from '../slices/basketSlice'
+import { useSelector } from 'react-redux';
 
 function Header() {
     const [session] = useSession();
     const router = useRouter()
-
+    const items = useSelector(selectItems);
     return (
         <header className="sticky top-0 z-50">
             <div className="flex items-center bg-amazon_blue p-1 flex-grow py-2">
@@ -42,7 +44,9 @@ function Header() {
                         <p className="font-extrabold md:text-sm">& Orders</p>
                     </div>
                     <div onClick={()=>router.push('/Checkout')} className="relative link flex items-center">
-                        <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center text-black font-bold rounded-full">4</span>
+                        <span className="absolute top-0 right-0 md:right-10 h-4 w-4 bg-yellow-400 text-center text-black font-bold rounded-full">
+                            {items.length}
+                            </span>
                         <ShoppingCartIcon className="h-10" />
                         <p className="hidden md:inline font-extrabold md:text-sm mt-2">Basket</p>
                     </div>
