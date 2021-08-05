@@ -14,12 +14,12 @@ export const Product = ({ id, title, price, description, category, image }) => {
     const [rating] = useState(
         Math.floor(Math.random() * (MAX_RATING - MIN_RATING + 1)) + MIN_RATING
     );
-
+    var quantity=1;
     const [hasPrime] = useState(Math.random() < 0.5)
 
     const addItemToBasket = () => {
         const product = {
-            id, title, price, description, category, image, rating, hasPrime
+            id, title, price, description, category, image, rating, hasPrime,quantity
         }
 
         //Sending the product as an action to the redux store...
